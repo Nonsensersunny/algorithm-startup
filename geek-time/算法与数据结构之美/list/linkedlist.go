@@ -37,8 +37,16 @@ func (l *LinkedList) Add(data int) {
 	l.Next = temp
 }
 
+// AddBefore insert data before pos
+func (l *LinkedList) AddBefore(pos, data int) error {
+	return nil
+}
+
 // Delete element
 func (l *LinkedList) Delete(pos int) error {
+	if l.Next == nil {
+		return nil
+	}
 	temp := l
 	for ; pos > 0; pos-- {
 		temp = temp.Next
@@ -50,11 +58,45 @@ func (l *LinkedList) Delete(pos int) error {
 	return nil
 }
 
+// GetNth returns nth node
+func (l *LinkedList) GetNth(n int) (*LinkedList, error) {
+	if l.Next == nil {
+		return nil, errors.New(errList["E001"])
+	}
+	temp := l
+	for ; n > 0; n-- {
+		temp = temp.Next
+		if temp == nil {
+			return nil, errors.New(errList["E001"])
+		}
+	}
+	return temp, nil
+}
+
+//Length return the length of the list
+func (l *LinkedList) Length() int {
+	if l.Next == nil {
+		return 0
+	}
+	cnt, tmp := -1, l
+	for tmp != nil {
+		cnt++
+		tmp = tmp.Next
+	}
+	return cnt
+}
+
 // PrintList prints list
 func (l *LinkedList) PrintList() {
+	if l.Next == nil {
+		fmt.Println("empty list")
+		return
+	}
 	temp := l.Next
+	fmt.Println("-----START-----")
 	for temp != nil {
 		fmt.Println(temp.Data)
 		temp = temp.Next
 	}
+	fmt.Println("-----END-----")
 }
